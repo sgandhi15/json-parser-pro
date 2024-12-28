@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,7 +8,7 @@ interface JsonDisplayProps {
   data: Record<string, any> | null;
 }
 
-export default function JsonDisplay({ data }: JsonDisplayProps) {
+const JsonDisplay = memo(function JsonDisplay({ data }: JsonDisplayProps) {
   const { toast } = useToast();
 
   const copyToClipboard = (value: any) => {
@@ -80,12 +81,14 @@ export default function JsonDisplay({ data }: JsonDisplayProps) {
 
   return (
     <Card className="bg-gray-800 border-gray-700">
-      <CardHeader>
-        <CardTitle className="text-gray-100">Parsed JSON</CardTitle>
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-base sm:text-lg text-gray-100">
+          Parsed JSON
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="bg-gray-700 p-4 rounded-lg overflow-auto max-h-[500px]">
-          <pre className="text-sm font-mono text-gray-100">
+      <CardContent className="p-4 sm:p-6 pt-0">
+        <div className="bg-gray-700 p-3 sm:p-4 rounded-lg overflow-auto max-h-[300px] sm:max-h-[500px]">
+          <pre className="text-xs sm:text-sm font-mono text-gray-100">
             {Object.entries(data).map(([key, value]) =>
               renderJsonItem(key, value)
             )}
@@ -94,4 +97,6 @@ export default function JsonDisplay({ data }: JsonDisplayProps) {
       </CardContent>
     </Card>
   );
-}
+});
+
+export default JsonDisplay;
